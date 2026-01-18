@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.BEPerfectSqat.BEPerfectSquat.api.dto.CreateVideoRequest;
+import com.BEPerfectSqat.BEPerfectSquat.api.dto.VideoResponse;
 import com.BEPerfectSqat.BEPerfectSquat.domain.entity.Video;
 import com.BEPerfectSqat.BEPerfectSquat.domain.service.VideoService;
 
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,10 +33,13 @@ public class VideoController {
     }
 
     @PostMapping
-    public Video createVideo(@Valid @RequestBody CreateVideoRequest videoRequest) {
+    public ResponseEntity<VideoResponse> createVideo(@Valid @RequestBody CreateVideoRequest videoRequest) {
+        Video video = videoService.saveVideo(
+            videoRequest.getSessionId(),
+            videoRequest.getFilePath());
+        VideoResponse response = VideoResponse.from(video);
 
-
-        return videoService.saveVideo(videoRequest.getSessionId(), videoRequest.getFilePath());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping

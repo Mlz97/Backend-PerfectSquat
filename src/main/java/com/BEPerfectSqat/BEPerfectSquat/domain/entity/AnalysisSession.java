@@ -6,6 +6,7 @@ import com.BEPerfectSqat.BEPerfectSquat.domain.enums.AnalysisSessionState;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "analysis_session")
+//Modelo de dominio + persistencia(JPA)
 public class AnalysisSession {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

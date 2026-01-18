@@ -4,9 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class CreateVideoRequest {
-    @NotNull
+    @NotNull(message = "sessionId no puede estar vacío")
     private Long sessionId;
-    @NotBlank
+    @NotBlank(message = "filePath no puede estar vacío")
     private String filePath;
 
     public Long getSessionId() {

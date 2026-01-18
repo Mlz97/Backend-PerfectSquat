@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "video")
+//Modelo de dominio + persistencia(JPA)
 public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,5 +37,22 @@ public class Video {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getSessionId() {
+        return sessionId;
+    }
+
+    public LocalDateTime getUploadedAt() {
+        return uploadedAt;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+    
 
 }
