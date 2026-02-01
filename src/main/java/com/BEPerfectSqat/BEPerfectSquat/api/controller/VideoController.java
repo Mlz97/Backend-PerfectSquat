@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,8 +42,10 @@ public class VideoController {
     }
 
     @GetMapping
-    public List<Video> getVideos(@RequestParam Long sessionId) {
-        return videoService.getVideosBySessionId(sessionId);
+    public ResponseEntity<List<VideoResponse>> getVideos(@RequestParam Long sessionId) {
+        List<Video> video = videoService.getVideosBySessionId(sessionId);
+        List<VideoResponse> response = video.stream().map(VideoResponse::from).toList();
+        return ResponseEntity.ok(response);
     }
     
     

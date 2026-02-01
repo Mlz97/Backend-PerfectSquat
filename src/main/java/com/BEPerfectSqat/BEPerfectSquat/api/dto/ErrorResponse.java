@@ -1,18 +1,24 @@
 package com.BEPerfectSqat.BEPerfectSquat.api.dto;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class ErrorResponse {
     private int status;
     private String error;
     private String message;
     private LocalDateTime timestamp;
+    private Map<String, String> details;
     
-    public ErrorResponse(int status, String error, String message, LocalDateTime timestamp) {
+    public ErrorResponse(int status, String error, String message, LocalDateTime timestamp, Map<String, String> details) {
         this.status = status;
         this.error = error;
         this.message = message;
         this.timestamp = timestamp;
+        this.details = details;
+    }
+    public ErrorResponse(int status, String error, String message, LocalDateTime timestamp){
+        this(status, error, message, timestamp, null);
     }
     public int getStatus() {
         return status;
@@ -25,6 +31,9 @@ public class ErrorResponse {
     }
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+    public Map<String, String> getDetails() {
+        return details;
     }
     
 }

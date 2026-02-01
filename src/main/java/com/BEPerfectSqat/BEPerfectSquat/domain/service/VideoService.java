@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.BEPerfectSqat.BEPerfectSquat.domain.entity.AnalysisSession;
 import com.BEPerfectSqat.BEPerfectSquat.domain.entity.Video;
+import com.BEPerfectSqat.BEPerfectSquat.domain.enums.AnalysisSessionState;
 import com.BEPerfectSqat.BEPerfectSquat.domain.exception.AnalysisSessionNotFoundException;
 import com.BEPerfectSqat.BEPerfectSquat.domain.repository.AnalysisSessionRepository;
 import com.BEPerfectSqat.BEPerfectSquat.domain.repository.VideoRepository;
@@ -25,6 +26,9 @@ public class VideoService {
     public Video saveVideo(Long sessionId, String filePath){
         AnalysisSession session = analysisSessionRepository.findById(sessionId)
             .orElseThrow(()->new AnalysisSessionNotFoundException(sessionId));
+        if(session.getState() != AnalysisSessionState.WAITING){
+            throw new IllegalArgumentException("No se pueden subir videos cuando la sesión está en estado "+ session.getState());
+        }
         Video newVideo = new Video();
         newVideo.setFilePath(filePath);
         newVideo.setSessionId(sessionId);
